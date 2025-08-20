@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	p := tea.NewProgram(tui.InitialModel())
+	p := tea.NewProgram(tui.InitialModel(), tea.WithAltScreen())
 	if _, err := p.Run(); err != nil {
 		fmt.Println("Error running TUI:", err)
 		os.Exit(1)

@@ -2,62 +2,51 @@ package tui
 
 import tea "github.com/charmbracelet/bubbletea"
 
-type model struct {
-	cursor int
-	notes []string
-	command string
+type SessionState int
+
+const (
+	StartupView SessionState = iota
+	EditorView
+)
+
+type Model struct {
+	State SessionState
+
+	Cursor int
+	Command string
 }
 
-func InitialModel() model {
-	return model{
-		cursor: 0,
-		notes: []string{},
-		command: "",
+func InitialModel() Model {
+	return Model{
+		State: StartupView,
+
+		Cursor: 0,
+		Command: "",
 	}
 }
 
-func (m model) Init() tea.Cmd {
+func (m Model) Init() tea.Cmd {
 	return nil
 }
 
-func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	switch msg := msg.(type) {
-	case tea.KeyMsg:
-		cmd := m.updateKeyMessage(msg)
-		if cmd != nil {
-			return m, cmd
-		}
+func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	switch m.State {
+	case StartupView:
+		m, cmd := m.updateStartupView(msg)
+		return m, cmd
+	case EditorView:
+		m, cmd := m.updateEditorView(msg)
+		return m, cmd
 	}
 	return m, nil
 }
 
-func (m model) View() string {
-	s := "Press ctrl+z to quit\n"
-
-	if m.command != "" {
-		s += m.command
+func (m Model) View() string {
+	switch m.State {
+	case StartupView:
+		return m.viewStartupView()
+	case EditorView:
+		return m.viewEditorView()
 	}
-
-	s += "\n"
-
-	return s
-}
-
-func (m *model) updateKeyMessage(msg tea.KeyMsg) (tea.Cmd) {
-	switch msg.String() {
-	// exit the program
-	case "ctrl+z":
-		return tea.Quit
-
-	case "enter":
-		m.command = ""
-	
-	case "backspace":
-		m.command = m.command[:len(m.command)-1]
-
-	default:
-		m.command += msg.String()
-	}
-
-	return nil
+	return ""
 }
