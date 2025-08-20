@@ -12,6 +12,9 @@ const (
 type Model struct {
 	State SessionState
 
+	Width int
+	Height int
+
 	Cursor int
 	Command string
 }
@@ -19,6 +22,9 @@ type Model struct {
 func InitialModel() Model {
 	return Model{
 		State: StartupView,
+
+		Width: 80,
+		Height: 24,
 
 		Cursor: 0,
 		Command: "",
