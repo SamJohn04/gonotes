@@ -1,12 +1,26 @@
 package tui
 
-import tea "github.com/charmbracelet/bubbletea"
+import (
+	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
+)
 
 func (m Model) viewStartupView() string {
-	return titleStyle.
+	title := titleStyle.
 		Width(m.Width).
+		Render("GONOTES")
+	subTitle := centerStyle.
+		Width(m.Width).
+		Render("Notes made quick, simple, and easy.")
+	
+	return centerVertStyle.
 		Height(m.Height).
-		Render("Welcome, and Good Day!")
+		Render(lipgloss.JoinVertical(
+			lipgloss.Center,
+			title,
+			"",
+			subTitle,
+			))
 }
 
 func (m Model) updateStartupView(msg tea.Msg) (tea.Model, tea.Cmd) {
