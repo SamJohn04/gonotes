@@ -32,7 +32,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m model) View() string {
-	s := "Press ctrl+c to quit\n"
+	s := "Press ctrl+z to quit\n"
 
 	if m.command != "" {
 		s += m.command
@@ -46,7 +46,7 @@ func (m model) View() string {
 func (m *model) updateKeyMessage(msg tea.KeyMsg) (tea.Cmd) {
 	switch msg.String() {
 	// exit the program
-	case "ctrl+c":
+	case "ctrl+z":
 		return tea.Quit
 
 	case "enter":
