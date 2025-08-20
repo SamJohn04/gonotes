@@ -29,7 +29,9 @@ func (m Model) updateEditorKeyMsg(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		m.Command += "\n"
 	
 	case "backspace":
-		m.Command = m.Command[:len(m.Command)-1]
+		if m.Command != "" {
+			m.Command = m.Command[:len(m.Command)-1]
+		}
 
 	default:
 		m.Command += msg.String()
