@@ -48,11 +48,16 @@ func (m *model) updateKeyMessage(msg tea.KeyMsg) (tea.Cmd) {
 	// exit the program
 	case "ctrl+c":
 		return tea.Quit
+
 	case "enter":
 		m.command = ""
-		return nil
+	
+	case "backspace":
+		m.command = m.command[:len(m.command)-1]
+
 	default:
 		m.command += msg.String()
-		return nil
 	}
+
+	return nil
 }
