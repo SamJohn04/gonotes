@@ -6,10 +6,7 @@ import (
 )
 
 func (m model) viewEditorView() string {
-	base := baseStyle.
-		Width(m.width).
-		Height(m.height-2).
-		Render(m.command)
+	base := m.textarea.View()
 
 	quitMessage := footerStyle.
 		Width(m.width).
@@ -25,21 +22,14 @@ func (m model) viewEditorView() string {
 }
 
 func (m model) updateEditorView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
+	var cmd tea.Cmd
+
 	switch msg.String() {
 	// exit the program
 	case "ctrl+z":
 		return m, tea.Quit
-	
-	case "enter":
-		m.command += "\n"
-	
-	case "backspace":
-		if m.command != "" {
-			m.command = m.command[:len(m.command)-1]
-		}
-
-	default:
-		m.command += msg.String()
 	}
-	return m, nil
+
+	m.textarea, cmd = m.textarea.Update(msg)
+	return m, cmd
 }

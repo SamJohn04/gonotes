@@ -1,6 +1,9 @@
 package tui
 
-import tea "github.com/charmbracelet/bubbletea"
+import (
+	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/bubbles/textarea"
+)
 
 type sessionState int
 
@@ -16,31 +19,27 @@ type model struct {
 	height int
 
 	// Editor state
-	lines []string
-	cursorRow int
-	cursorCol int
-	scrollY int
+	textarea textarea.Model
 	filename string
 	modified bool
-
-	command string
 }
 
 func InitialModel() model {
+	ti := textarea.New()
+
 	return model{
 		state: startupView,
 
 		width: 80,
 		height: 24,
 
-		lines: []string{""},
-		cursorRow: 0,
-		cursorCol: 0,
-		scrollY: 0,
-		filename: "filename.txt",
+		textarea: ti,
+		// lines: []string{""},
+		// cursorRow: 0,
+		// cursorCol: 0,
+		// scrollY: 0,
+		filename: "",
 		modified: false,
-
-		command: "",
 	}
 }
 
@@ -53,6 +52,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.WindowSizeMsg:
 		m.width = msg.Width
 		m.height = msg.Height
+
+		m.textarea.SetWidth(m.width)
+		m.textarea.SetHeight(m.height-2)
 	
 	case tea.KeyMsg:
 		switch m.state {

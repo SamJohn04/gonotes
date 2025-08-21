@@ -32,6 +32,7 @@ func (m model) updateStartupView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	// change from Startup to Editor
 	case "enter":
 		m.state = editorView
+		m.textarea.Focus()
 	}
 	return m, nil
 }
