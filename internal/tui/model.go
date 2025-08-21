@@ -53,7 +53,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case editorView:
 			m, cmd := m.updateEditorView(msg)
 			return m, cmd
-	}
+		}
 	}
 	return m, nil
 }
