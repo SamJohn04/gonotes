@@ -15,8 +15,13 @@ type model struct {
 	width int
 	height int
 
+	// Editor state
+	lines []string
 	cursorRow int
 	cursorCol int
+	scrollY int
+	filename string
+	modified bool
 
 	command string
 }
@@ -28,8 +33,12 @@ func InitialModel() model {
 		width: 80,
 		height: 24,
 
+		lines: []string{""},
 		cursorRow: 0,
 		cursorCol: 0,
+		scrollY: 0,
+		filename: "filename.txt",
+		modified: false,
 
 		command: "",
 	}

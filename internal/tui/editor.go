@@ -1,13 +1,27 @@
 package tui
 
-import tea "github.com/charmbracelet/bubbletea"
+import (
+	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
+)
 
 func (m model) viewEditorView() string {
-	s := "Press ctrl+z to quit\n"
-	s += m.command
-	s += "\n"
+	base := baseStyle.
+		Width(m.width).
+		Height(m.height-2).
+		Render(m.command)
 
-	return s
+	quitMessage := footerStyle.
+		Width(m.width).
+		Height(1).
+		Render("(ctrl+z to quit)")
+
+	return lipgloss.JoinVertical(
+		lipgloss.Left,
+		base,
+		"",
+		quitMessage,
+		)
 }
 
 func (m model) updateEditorView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
