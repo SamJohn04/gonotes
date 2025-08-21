@@ -2,30 +2,30 @@ package tui
 
 import tea "github.com/charmbracelet/bubbletea"
 
-func (m Model) viewEditorView() string {
+func (m model) viewEditorView() string {
 	s := "Press ctrl+z to quit\n"
-	s += m.Command
+	s += m.command
 	s += "\n"
 
 	return s
 }
 
-func (m Model) updateEditorView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
+func (m model) updateEditorView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	switch msg.String() {
 	// exit the program
 	case "ctrl+z":
 		return m, tea.Quit
 	
 	case "enter":
-		m.Command += "\n"
+		m.command += "\n"
 	
 	case "backspace":
-		if m.Command != "" {
-			m.Command = m.Command[:len(m.Command)-1]
+		if m.command != "" {
+			m.command = m.command[:len(m.command)-1]
 		}
 
 	default:
-		m.Command += msg.String()
+		m.command += msg.String()
 	}
 	return m, nil
 }

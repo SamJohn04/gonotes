@@ -5,16 +5,16 @@ import (
 	"github.com/charmbracelet/lipgloss"
 )
 
-func (m Model) viewStartupView() string {
+func (m model) viewStartupView() string {
 	title := titleStyle.
-		Width(m.Width).
+		Width(m.width).
 		Render("GONOTES")
 	subTitle := centerStyle.
-		Width(m.Width).
+		Width(m.width).
 		Render("Notes made quick, simple, and easy.")
 	
 	return centerVertStyle.
-		Height(m.Height).
+		Height(m.height).
 		Render(lipgloss.JoinVertical(
 			lipgloss.Center,
 			title,
@@ -23,7 +23,7 @@ func (m Model) viewStartupView() string {
 			))
 }
 
-func (m Model) updateStartupView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
+func (m model) updateStartupView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	switch msg.String() {
 	// exit the program
 	case "ctrl+z":
@@ -31,7 +31,7 @@ func (m Model) updateStartupView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	
 	// change from Startup to Editor
 	case "enter":
-		m.State = EditorView
+		m.state = editorView
 	}
 	return m, nil
 }

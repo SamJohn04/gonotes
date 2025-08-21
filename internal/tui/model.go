@@ -2,51 +2,51 @@ package tui
 
 import tea "github.com/charmbracelet/bubbletea"
 
-type SessionState int
+type sessionState int
 
 const (
-	StartupView SessionState = iota
-	EditorView
+	startupView sessionState = iota
+	editorView
 )
 
-type Model struct {
-	State SessionState
+type model struct {
+	state sessionState
 
-	Width int
-	Height int
+	width int
+	height int
 
-	Cursor int
-	Command string
+	cursor int
+	command string
 }
 
-func InitialModel() Model {
-	return Model{
-		State: StartupView,
+func InitialModel() model {
+	return model{
+		state: startupView,
 
-		Width: 80,
-		Height: 24,
+		width: 80,
+		height: 24,
 
-		Cursor: 0,
-		Command: "",
+		cursor: 0,
+		command: "",
 	}
 }
 
-func (m Model) Init() tea.Cmd {
+func (m model) Init() tea.Cmd {
 	return nil
 }
 
-func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
-		m.Width = msg.Width
-		m.Height = msg.Height
+		m.width = msg.Width
+		m.height = msg.Height
 	
 	case tea.KeyMsg:
-		switch m.State {
-		case StartupView:
+		switch m.state {
+		case startupView:
 			m, cmd := m.updateStartupView(msg)
 			return m, cmd
-		case EditorView:
+		case editorView:
 			m, cmd := m.updateEditorView(msg)
 			return m, cmd
 	}
@@ -54,11 +54,11 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
-func (m Model) View() string {
-	switch m.State {
-	case StartupView:
+func (m model) View() string {
+	switch m.state {
+	case startupView:
 		return m.viewStartupView()
-	case EditorView:
+	case editorView:
 		return m.viewEditorView()
 	}
 	return ""
