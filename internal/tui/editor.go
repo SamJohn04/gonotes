@@ -28,6 +28,10 @@ func (m model) updateEditorView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	// exit the program
 	case "ctrl+z":
 		return m, tea.Quit
+	
+	case "tab":
+		m.textarea.InsertString("\t")
+		return m, nil
 	}
 
 	m.textarea, cmd = m.textarea.Update(msg)
