@@ -10,16 +10,7 @@ func (m Model) viewEditorView() string {
 	return s
 }
 
-func (m Model) updateEditorView(msg tea.Msg) (tea.Model, tea.Cmd) {
-	switch msg := msg.(type) {
-	case tea.KeyMsg:
-		m, cmd := m.updateEditorKeyMsg(msg)
-		return m, cmd
-	}
-	return m, nil
-}
-
-func (m Model) updateEditorKeyMsg(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
+func (m Model) updateEditorView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	switch msg.String() {
 	// exit the program
 	case "ctrl+z":
