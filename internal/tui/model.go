@@ -15,7 +15,9 @@ type model struct {
 	width int
 	height int
 
-	cursor int
+	cursorRow int
+	cursorCol int
+
 	command string
 }
 
@@ -26,7 +28,9 @@ func InitialModel() model {
 		width: 80,
 		height: 24,
 
-		cursor: 0,
+		cursorRow: 0,
+		cursorCol: 0,
+
 		command: "",
 	}
 }
