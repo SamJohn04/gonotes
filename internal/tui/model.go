@@ -30,13 +30,21 @@ type model struct {
 }
 
 func InitialModel(filename string) model {
+	var initialState sessionState
+
 	ti := textarea.New()
 	ti.SetValue(files.ReadFile(filename))
+
+	if ti.Value() == "" {
+		initialState = startupView
+	} else {
+		initialState = editorView
+	}
 
 	saveTi := textarea.New()
 
 	return model{
-		state: startupView,
+		state: initialState,
 
 		width: 80,
 		height: 24,
