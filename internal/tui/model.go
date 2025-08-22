@@ -39,6 +39,7 @@ func InitialModel(filename string) model {
 		initialState = startupView
 	} else {
 		initialState = editorView
+		ti.Focus()
 	}
 
 	saveTi := textarea.New()
