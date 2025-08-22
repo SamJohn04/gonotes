@@ -10,6 +10,6 @@ func ReadFile(filename string) string {
 	return string(content)
 }
 
-func WriteFile(filename, content string) {
-	os.WriteFile(filename, []byte(content), 0644)
+func WriteFile(filename, content string) error {
+	return os.WriteFile(filename, []byte(content), 0644)
 }
