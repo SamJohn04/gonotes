@@ -11,6 +11,7 @@ type sessionState int
 const (
 	startupView sessionState = iota
 	editorView
+	saveView
 )
 
 type model struct {
@@ -23,11 +24,16 @@ type model struct {
 	textarea textarea.Model
 	filename string
 	modified bool
+
+	// Save state
+	save textarea.Model
 }
 
 func InitialModel(filename string) model {
 	ti := textarea.New()
 	ti.SetValue(files.ReadFile(filename))
+
+	saveTi := textarea.New()
 
 	return model{
 		state: startupView,
@@ -36,12 +42,10 @@ func InitialModel(filename string) model {
 		height: 24,
 
 		textarea: ti,
-		// lines: []string{""},
-		// cursorRow: 0,
-		// cursorCol: 0,
-		// scrollY: 0,
 		filename: filename,
 		modified: false,
+
+		save: saveTi,
 	}
 }
 
