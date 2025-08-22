@@ -10,7 +10,15 @@ import (
 )
 
 func main() {
-	p := tea.NewProgram(tui.InitialModel(), tea.WithAltScreen())
+	var filename string
+
+	if len(os.Args) == 1 {
+		filename = ""
+	} else {
+		filename = os.Args[1]
+	}
+
+	p := tea.NewProgram(tui.InitialModel(filename), tea.WithAltScreen())
 	if _, err := p.Run(); err != nil {
 		fmt.Println("Error running TUI:", err)
 		os.Exit(1)

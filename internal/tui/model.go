@@ -1,8 +1,9 @@
 package tui
 
 import (
-	tea "github.com/charmbracelet/bubbletea"
+	"github.com/SamJohn04/gonotes/internal/files"
 	"github.com/charmbracelet/bubbles/textarea"
+	tea "github.com/charmbracelet/bubbletea"
 )
 
 type sessionState int
@@ -24,8 +25,9 @@ type model struct {
 	modified bool
 }
 
-func InitialModel() model {
+func InitialModel(filename string) model {
 	ti := textarea.New()
+	ti.SetValue(files.ReadFile(filename))
 
 	return model{
 		state: startupView,
@@ -38,7 +40,7 @@ func InitialModel() model {
 		// cursorRow: 0,
 		// cursorCol: 0,
 		// scrollY: 0,
-		filename: "",
+		filename: filename,
 		modified: false,
 	}
 }
