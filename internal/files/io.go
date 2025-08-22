@@ -9,3 +9,7 @@ func ReadFile(filename string) string {
 	}
 	return string(content)
 }
+
+func WriteFile(filename, content string) {
+	os.WriteFile(filename, []byte(content), 0644)
+}
