@@ -1,7 +1,6 @@
 package tui
 
 import (
-	"github.com/SamJohn04/gonotes/internal/files"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
@@ -31,7 +30,7 @@ func (m model) updateEditorView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		return m, tea.Quit
 
 	case "ctrl+s":
-		files.WriteFile(m.filename, m.textarea.Value())
+		m.state = saveView
 		return m, nil
 	
 	case "tab":

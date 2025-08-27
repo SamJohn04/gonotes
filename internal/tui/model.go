@@ -3,6 +3,7 @@ package tui
 import (
 	"github.com/SamJohn04/gonotes/internal/files"
 	"github.com/charmbracelet/bubbles/textarea"
+	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
 )
 
@@ -26,7 +27,7 @@ type model struct {
 	modified bool
 
 	// Save state
-	save textarea.Model
+	save textinput.Model
 }
 
 func InitialModel(filename string) model {
@@ -42,7 +43,7 @@ func InitialModel(filename string) model {
 		ti.Focus()
 	}
 
-	saveTi := textarea.New()
+	saveTi := textinput.New()
 
 	return model{
 		state: initialState,
@@ -79,6 +80,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case editorView:
 			m, cmd := m.updateEditorView(msg)
 			return m, cmd
+		default:
+			panic("Something went horribly wrong.")
 		}
 	}
 	return m, nil
@@ -90,6 +93,7 @@ func (m model) View() string {
 		return m.viewStartupView()
 	case editorView:
 		return m.viewEditorView()
+	default:
+		panic("Something went horribly wrong.")
 	}
-	return ""
 }
