@@ -28,7 +28,7 @@ func (m model) updateSaveView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	// go to editor after saving
 	case "ctrl+s":
 		m.filename = m.save.Value()
-		files.WriteFile(m.filename, m.textarea.Value())
+		files.WriteNewFile(m.filename, m.textarea.Value())
 
 		m.save.Blur()
 		m.state = editorView

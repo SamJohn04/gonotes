@@ -1,6 +1,9 @@
 package files
 
-import "os"
+import (
+	"errors"
+	"os"
+)
 
 func ReadFile(filename string) string {
 	content, err := os.ReadFile(filename)
@@ -12,4 +15,11 @@ func ReadFile(filename string) string {
 
 func WriteFile(filename, content string) error {
 	return os.WriteFile(filename, []byte(content), 0644)
+}
+
+func WriteNewFile(filename, content string) error {
+	if _, err := os.Stat(filename); err != nil {
+		return WriteFile(filename, content)
+	}
+	return errors.New("file already exists")
 }
