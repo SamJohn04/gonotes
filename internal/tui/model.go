@@ -36,7 +36,7 @@ func InitialModel(filename string) model {
 	ti := textarea.New()
 	ti.SetValue(files.ReadFile(filename))
 
-	if ti.Value() == "" {
+	if filename == "" {
 		initialState = startupView
 	} else {
 		initialState = editorView
@@ -80,6 +80,9 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case editorView:
 			m, cmd := m.updateEditorView(msg)
 			return m, cmd
+		case saveView:
+			m, cmd := m.updateSaveView(msg)
+			return m, cmd
 		default:
 			panic("Something went horribly wrong.")
 		}
@@ -93,6 +96,8 @@ func (m model) View() string {
 		return m.viewStartupView()
 	case editorView:
 		return m.viewEditorView()
+	case saveView:
+		return m.viewSaveView()
 	default:
 		panic("Something went horribly wrong.")
 	}

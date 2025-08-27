@@ -29,4 +29,8 @@ var (
 	footerStyle = lipgloss.NewStyle().
 		Background(lipgloss.Color("#353535")).
 		Align(lipgloss.Center, lipgloss.Bottom)
+
+	// Save Styles
+	bothCenterStyle = lipgloss.NewStyle().
+		Align(lipgloss.Center, lipgloss.Center)
 )

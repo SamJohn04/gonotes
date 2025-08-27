@@ -32,7 +32,9 @@ func (m model) updateEditorView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 
 	case "ctrl+s":
 		if m.filename == "" {
+			m.textarea.Blur()
 			m.state = saveView
+			m.save.Focus()
 		} else {
 			files.WriteFile(m.filename, m.textarea.Value())
 		}
