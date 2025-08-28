@@ -3,14 +3,22 @@ package tui
 import (
 	"github.com/SamJohn04/gonotes/internal/files"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 func (m model) viewSaveView() string {
+	cmdText := commandTextStyle.Render("Enter file name:")
 	base := m.save.View()
+
 	return bothCenterStyle.
 		Height(m.height).
 		Width(m.width).
-		Render(base)
+		Render(lipgloss.JoinVertical(
+			lipgloss.Left,
+			cmdText,
+			"",
+			base,
+			))
 }
 
 func (m model) updateSaveView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
@@ -18,7 +26,7 @@ func (m model) updateSaveView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 
 	switch msg.String() {
 	// go to editor without saving
-	case "ctrl+z":
+	case "esc":
 		m.save.Blur()
 		m.state = editorView
 		m.textarea.Focus()
@@ -26,13 +34,15 @@ func (m model) updateSaveView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		return m, nil
 	
 	// go to editor after saving
-	case "ctrl+s":
+	case "enter":
 		m.filename = m.save.Value()
-		files.WriteNewFile(m.filename, m.textarea.Value())
+		err := files.WriteNewFile(m.filename, m.textarea.Value())
 
-		m.save.Blur()
-		m.state = editorView
-		m.textarea.Focus()
+		if err == nil {
+			m.save.Blur()
+			m.state = editorView
+			m.textarea.Focus()
+		}
 
 		return m, nil
 	}

@@ -31,6 +31,9 @@ var (
 		Align(lipgloss.Center, lipgloss.Bottom)
 
 	// Save Styles
+	commandTextStyle = lipgloss.NewStyle().
+		Foreground(lipgloss.Color("#00d7af"))
+
 	bothCenterStyle = lipgloss.NewStyle().
 		Align(lipgloss.Center, lipgloss.Center)
 )
