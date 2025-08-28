@@ -30,6 +30,7 @@ func (m model) updateEditorView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	case "ctrl+z":
 		return m, tea.Quit
 
+	// save
 	case "ctrl+s":
 		if m.filename == "" {
 			m.textarea.Blur()
@@ -38,6 +39,14 @@ func (m model) updateEditorView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		} else {
 			files.WriteFile(m.filename, m.textarea.Value())
 		}
+		return m, nil
+	
+	// save by new filename even if it exists
+	case "ctrl+w":
+		m.textarea.Blur()
+		m.state = saveView
+		m.save.Focus()
+
 		return m, nil
 	
 	case "tab":
