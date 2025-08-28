@@ -75,14 +75,11 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.KeyMsg:
 		switch m.state {
 		case startupView:
-			m, cmd := m.updateStartupView(msg)
-			return m, cmd
+			return m.updateStartupView(msg)
 		case editorView:
-			m, cmd := m.updateEditorView(msg)
-			return m, cmd
+			return m.updateEditorView(msg)
 		case saveView:
-			m, cmd := m.updateSaveView(msg)
-			return m, cmd
+			return m.updateSaveView(msg)
 		default:
 			panic("Something went horribly wrong.")
 		}
