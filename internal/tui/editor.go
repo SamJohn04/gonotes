@@ -12,7 +12,7 @@ func (m model) viewEditorView() string {
 	quitMessage := footerStyle.
 		Width(m.width).
 		Height(1).
-		Render("(ctrl+z to quit)")
+		Render("(ctrl+z to quit; ctrl+s to save; ctrl+w to save as)")
 
 	return lipgloss.JoinVertical(
 		lipgloss.Left,

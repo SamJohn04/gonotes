@@ -9,6 +9,7 @@ import (
 func (m model) viewSaveView() string {
 	cmdText := commandTextStyle.Render("Enter file name:")
 	base := m.save.View()
+	helpText := "(enter to save; esc to cancel)"
 
 	return bothCenterStyle.
 		Height(m.height).
@@ -18,6 +19,8 @@ func (m model) viewSaveView() string {
 			cmdText,
 			"",
 			base,
+			"",
+			helpText,
 			))
 }
 
