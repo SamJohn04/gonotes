@@ -8,7 +8,7 @@ import (
 func (m model) viewStartupView() string {
 	title := titleStyle.
 		Width(m.width).
-		Render("GONOTES")
+		Render("NATE")
 	subTitle := centerStyle.
 		Width(m.width).
 		Render("Notes made quick, simple, and easy.")
