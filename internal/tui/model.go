@@ -1,10 +1,12 @@
 package tui
 
 import (
+	"github.com/SamJohn04/gonotes/internal/config"
 	"github.com/SamJohn04/gonotes/internal/files"
 	"github.com/charmbracelet/bubbles/textarea"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type sessionState int
@@ -30,11 +32,18 @@ type model struct {
 	save textinput.Model
 }
 
-func InitialModel(filename string) model {
+func InitialModel(filename string, styleCfg config.StyleConfig) model {
 	var initialState sessionState
 
 	ti := textarea.New()
 	ti.SetValue(files.ReadFile(filename))
+	
+	ti.FocusedStyle.Base = lipgloss.NewStyle().
+		Foreground(lipgloss.Color(styleCfg.ForegroundColor)).
+		Background(lipgloss.Color(styleCfg.BackgroundColor))
+	ti.FocusedStyle.CursorLine = lipgloss.NewStyle().
+		Foreground(lipgloss.Color(styleCfg.ForegroundColor)).
+		Background(lipgloss.Color(styleCfg.BackgroundColor))
 
 	if filename == "" {
 		initialState = startupView

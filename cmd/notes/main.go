@@ -6,6 +6,7 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 
+	"github.com/SamJohn04/gonotes/internal/config"
 	"github.com/SamJohn04/gonotes/internal/tui"
 )
 
@@ -18,7 +19,9 @@ func main() {
 		filename = os.Args[1]
 	}
 
-	p := tea.NewProgram(tui.InitialModel(filename), tea.WithAltScreen())
+	styleCfg := config.Load()
+
+	p := tea.NewProgram(tui.InitialModel(filename, styleCfg), tea.WithAltScreen())
 	if _, err := p.Run(); err != nil {
 		fmt.Println("Error running TUI:", err)
 		os.Exit(1)
