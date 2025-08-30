@@ -30,10 +30,7 @@ func (m model) updateSaveView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	switch msg.String() {
 	// go to editor without saving
 	case "esc":
-		m.save.Blur()
-		m.state = editorView
-		m.textarea.Focus()
-
+		m.switchToEditorView()
 		return m, nil
 	
 	// go to editor after saving
@@ -42,9 +39,7 @@ func (m model) updateSaveView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		err := files.WriteNewFile(m.filename, m.textarea.Value())
 
 		if err == nil {
-			m.save.Blur()
-			m.state = editorView
-			m.textarea.Focus()
+			m.switchToEditorView()
 		}
 
 		return m, nil
@@ -52,4 +47,10 @@ func (m model) updateSaveView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 
 	m.save, cmd = m.save.Update(msg)
 	return m, cmd
+}
+
+func (m *model) switchToSaveView() {
+	m.textarea.Blur()
+	m.state = saveView
+	m.save.Focus()
 }
