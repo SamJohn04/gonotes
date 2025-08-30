@@ -9,7 +9,7 @@ import (
 
 type StyleConfig struct {
 	BackgroundColor string `json:"background,omitempty"`
-	ForegroundColor string `json:"color,omitempty"`
+	ForegroundColor string `json:"foreground,omitempty"`
 }
 
 func Load() StyleConfig {
