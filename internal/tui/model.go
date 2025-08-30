@@ -1,8 +1,8 @@
 package tui
 
 import (
-	"github.com/SamJohn04/gonotes/internal/config"
-	"github.com/SamJohn04/gonotes/internal/files"
+	"github.com/SamJohn04/nate/internal/config"
+	"github.com/SamJohn04/nate/internal/files"
 	"github.com/charmbracelet/bubbles/textarea"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"

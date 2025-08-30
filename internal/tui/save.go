@@ -1,7 +1,7 @@
 package tui
 
 import (
-	"github.com/SamJohn04/gonotes/internal/files"
+	"github.com/SamJohn04/nate/internal/files"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )

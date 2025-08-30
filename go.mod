@@ -1,4 +1,4 @@
-module github.com/SamJohn04/gonotes
+module github.com/SamJohn04/nate
 
 go 1.23.0
 
