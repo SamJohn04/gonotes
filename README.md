@@ -1,5 +1,3 @@
-# GoNotes
+# Nate
 
-A Terminal-User-Interface (TUI) for writing notes.
-
-Currently a Work-In-Progress
+A Terminal-User-Interface (TUI) for writing notes. (Previously GoNotes)
