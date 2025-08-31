@@ -17,7 +17,6 @@ func (m model) viewEditorView() string {
 	return lipgloss.JoinVertical(
 		lipgloss.Left,
 		base,
-		"",
 		quitMessage,
 		)
 }

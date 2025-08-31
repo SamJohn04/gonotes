@@ -79,7 +79,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.height = msg.Height
 
 		m.textarea.SetWidth(m.width)
-		m.textarea.SetHeight(m.height-2)
+		m.textarea.SetHeight(m.height-1)
 	
 	case tea.KeyMsg:
 		switch m.state {
