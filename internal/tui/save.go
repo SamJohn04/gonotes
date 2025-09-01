@@ -8,7 +8,9 @@ import (
 
 func (m model) viewSaveView() string {
 	cmdText := "Enter file name:"
-	base := m.save.View()
+	base := baseStyle.
+		Width(40).
+		Render(m.save.View())
 	helpText := "(enter to save; esc to cancel)"
 
 	text := centerBothStyle.

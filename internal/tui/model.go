@@ -50,6 +50,9 @@ func InitialModel(filename string, styleCfg config.StyleConfig) model {
 	}
 
 	saveTi := textinput.New()
+	saveTi.PromptStyle = baseStyle
+	saveTi.PlaceholderStyle = baseStyle
+	saveTi.TextStyle = baseStyle
 
 	return model{
 		state: initialState,
