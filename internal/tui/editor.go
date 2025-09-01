@@ -1,6 +1,8 @@
 package tui
 
 import (
+	"strings"
+
 	"github.com/SamJohn04/nate/internal/files"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -46,6 +48,12 @@ func (m model) updateEditorView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	case "tab":
 		m.textarea.InsertString("\t")
 		return m, nil
+	
+	case "enter":
+		leading := m.findLeadingWhitespace(m.textarea.Line())
+		m.textarea, cmd = m.textarea.Update(msg)
+		m.textarea.InsertString(leading)
+		return m, cmd
 	}
 
 	m.textarea, cmd = m.textarea.Update(msg)
@@ -56,4 +64,17 @@ func (m *model) switchToEditorView() {
 	m.save.Blur()
 	m.state = editorView
 	m.textarea.Focus()
+}
+
+func (m model) findLeadingWhitespace(index int) string {
+	line := strings.SplitN(m.textarea.Value(), "\n", index+1)[index]
+	leading := ""
+	for _, r := range line {
+		if r == '\t' || r == ' ' {
+			leading += string(r)
+		} else {
+			break
+		}
+	}
+	return leading
 }
