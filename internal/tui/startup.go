@@ -9,11 +9,11 @@ func (m model) viewStartupView() string {
 	title := titleStyle.
 		Width(m.width).
 		Render("NATE")
-	subTitle := centerStyle.
+	subTitle := centerHorizontalStyle.
 		Width(m.width).
 		Render("Notes made quick, simple, and easy.")
 	
-	return centerVertStyle.
+	return centerVerticalStyle.
 		Height(m.height).
 		Render(lipgloss.JoinVertical(
 			lipgloss.Center,

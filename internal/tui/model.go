@@ -6,7 +6,6 @@ import (
 	"github.com/charmbracelet/bubbles/textarea"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
 )
 
 type sessionState int
@@ -37,13 +36,11 @@ func InitialModel(filename string, styleCfg config.StyleConfig) model {
 
 	ti := textarea.New()
 	ti.SetValue(files.ReadFile(filename))
+
+	SetBaseStyle(styleCfg)
 	
-	ti.FocusedStyle.Base = lipgloss.NewStyle().
-		Foreground(lipgloss.Color(styleCfg.ForegroundColor)).
-		Background(lipgloss.Color(styleCfg.BackgroundColor))
-	ti.FocusedStyle.CursorLine = lipgloss.NewStyle().
-		Foreground(lipgloss.Color(styleCfg.ForegroundColor)).
-		Background(lipgloss.Color(styleCfg.BackgroundColor))
+	ti.FocusedStyle.Base = baseStyle
+	ti.FocusedStyle.CursorLine = baseStyle
 
 	if filename == "" {
 		initialState = startupView

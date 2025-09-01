@@ -7,21 +7,22 @@ import (
 )
 
 func (m model) viewSaveView() string {
-	cmdText := commandTextStyle.Render("Enter file name:")
+	cmdText := "Enter file name:"
 	base := m.save.View()
 	helpText := "(enter to save; esc to cancel)"
 
-	return bothCenterStyle.
+	text := centerBothStyle.
 		Height(m.height).
 		Width(m.width).
 		Render(lipgloss.JoinVertical(
 			lipgloss.Left,
 			cmdText,
-			"",
 			base,
 			"",
 			helpText,
 			))
+
+	return baseStyle.Render(text)
 }
 
 func (m model) updateSaveView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {

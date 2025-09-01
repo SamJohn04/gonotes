@@ -10,12 +10,14 @@ import (
 type StyleConfig struct {
 	BackgroundColor string `json:"background,omitempty"`
 	ForegroundColor string `json:"foreground,omitempty"`
+	HeadingColor string `json:"head,omitempty"`
 }
 
 func Load() StyleConfig {
 	cfg := StyleConfig{
 		BackgroundColor: "#232627",
 		ForegroundColor: "#fefefe",
+		HeadingColor: "#00d7af",
 	}
 
 	home, err := os.UserHomeDir()
