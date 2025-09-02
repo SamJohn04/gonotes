@@ -1,6 +1,8 @@
 package tui
 
 import (
+	"path/filepath"
+
 	"github.com/SamJohn04/nate/internal/config"
 	"github.com/SamJohn04/nate/internal/files"
 	"github.com/charmbracelet/bubbles/textarea"
@@ -14,6 +16,7 @@ const (
 	startupView sessionState = iota
 	editorView
 	saveView
+	explorerView
 )
 
 type model struct {
@@ -29,6 +32,10 @@ type model struct {
 
 	// Save state
 	save textinput.Model
+
+	// Explorer state
+	currentDirectory string
+	directoryExplorer []string
 }
 
 func InitialModel(filename string, styleCfg config.StyleConfig) model {
@@ -54,6 +61,8 @@ func InitialModel(filename string, styleCfg config.StyleConfig) model {
 	saveTi.PlaceholderStyle = baseStyle
 	saveTi.TextStyle = baseStyle
 
+	currentDirectory := filepath.Dir(filename)
+
 	return model{
 		state: initialState,
 
@@ -65,6 +74,8 @@ func InitialModel(filename string, styleCfg config.StyleConfig) model {
 		modified: false,
 
 		save: saveTi,
+
+		currentDirectory: currentDirectory,
 	}
 }
 
@@ -89,6 +100,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m.updateEditorView(msg)
 		case saveView:
 			return m.updateSaveView(msg)
+		case explorerView:
+			return m.updateExplorerView(msg)
 		default:
 			panic("Something went horribly wrong.")
 		}
@@ -104,6 +117,8 @@ func (m model) View() string {
 		return m.viewEditorView()
 	case saveView:
 		return m.viewSaveView()
+	case explorerView:
+		return m.viewExplorerView()
 	default:
 		panic("Something went horribly wrong.")
 	}
