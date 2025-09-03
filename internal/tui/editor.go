@@ -44,6 +44,11 @@ func (m model) updateEditorView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	case "ctrl+w":
 		m.switchToSaveView()
 		return m, nil
+
+	// explorer
+	case "ctrl+e":
+		m.switchToExplorerView()
+		return m, nil
 	
 	case "tab":
 		m.textarea.InsertString("\t")
