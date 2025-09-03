@@ -4,7 +4,9 @@ import (
 	"path/filepath"
 
 	"github.com/SamJohn04/nate/internal/config"
+	"github.com/SamJohn04/nate/internal/explorer"
 	"github.com/SamJohn04/nate/internal/files"
+	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/bubbles/textarea"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
@@ -35,7 +37,7 @@ type model struct {
 
 	// Explorer state
 	currentDirectory string
-	directoryExplorer []string
+	dirList list.Model
 }
 
 func InitialModel(filename string, styleCfg config.StyleConfig) model {
@@ -62,6 +64,7 @@ func InitialModel(filename string, styleCfg config.StyleConfig) model {
 	saveTi.TextStyle = baseStyle
 
 	currentDirectory := filepath.Dir(filename)
+	dirList := list.New(explorer.ReadDir(currentDirectory), list.NewDefaultDelegate(), 0, 0)
 
 	return model{
 		state: initialState,
@@ -76,6 +79,7 @@ func InitialModel(filename string, styleCfg config.StyleConfig) model {
 		save: saveTi,
 
 		currentDirectory: currentDirectory,
+		dirList: dirList,
 	}
 }
 
