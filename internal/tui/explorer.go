@@ -42,8 +42,9 @@ func (m model) updateExplorerView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		}
 	}
 
-	m.dirList.Update(msg)
-	return m, nil
+	var cmd tea.Cmd
+	m.dirList, cmd = m.dirList.Update(msg)
+	return m, cmd
 }
 
 func (m *model) switchToExplorerView() {

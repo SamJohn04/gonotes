@@ -64,7 +64,7 @@ func InitialModel(filename string, styleCfg config.StyleConfig) model {
 	saveTi.TextStyle = baseStyle
 
 	currentDirectory := filepath.Dir(filename)
-	dirList := list.New(explorer.ReadDir(currentDirectory), list.NewDefaultDelegate(), 0, 0)
+	dirList := list.New(explorer.ReadDir(currentDirectory), list.NewDefaultDelegate(), 50, 15)
 
 	return model{
 		state: initialState,
