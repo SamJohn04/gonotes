@@ -1,8 +1,12 @@
 package tui
 
 import (
+	"path/filepath"
+
 	"github.com/SamJohn04/nate/internal/config"
+	"github.com/SamJohn04/nate/internal/explorer"
 	"github.com/SamJohn04/nate/internal/files"
+	"github.com/charmbracelet/bubbles/list"
 	"github.com/charmbracelet/bubbles/textarea"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
@@ -14,6 +18,7 @@ const (
 	startupView sessionState = iota
 	editorView
 	saveView
+	explorerView
 )
 
 type model struct {
@@ -29,6 +34,10 @@ type model struct {
 
 	// Save state
 	save textinput.Model
+
+	// Explorer state
+	currentDirectory string
+	dirList list.Model
 }
 
 func InitialModel(filename string, styleCfg config.StyleConfig) model {
@@ -54,6 +63,9 @@ func InitialModel(filename string, styleCfg config.StyleConfig) model {
 	saveTi.PlaceholderStyle = baseStyle
 	saveTi.TextStyle = baseStyle
 
+	currentDirectory, _ := filepath.Abs(filepath.Dir(filename))
+	dirList := list.New(explorer.ReadDir(currentDirectory), list.NewDefaultDelegate(), 0, 0)
+
 	return model{
 		state: initialState,
 
@@ -65,6 +77,9 @@ func InitialModel(filename string, styleCfg config.StyleConfig) model {
 		modified: false,
 
 		save: saveTi,
+
+		currentDirectory: currentDirectory,
+		dirList: dirList,
 	}
 }
 
@@ -80,6 +95,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		m.textarea.SetWidth(m.width)
 		m.textarea.SetHeight(m.height-1)
+
+		m.dirList.SetSize(m.width, m.height-1)
 	
 	case tea.KeyMsg:
 		switch m.state {
@@ -89,6 +106,8 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			return m.updateEditorView(msg)
 		case saveView:
 			return m.updateSaveView(msg)
+		case explorerView:
+			return m.updateExplorerView(msg)
 		default:
 			panic("Something went horribly wrong.")
 		}
@@ -104,6 +123,8 @@ func (m model) View() string {
 		return m.viewEditorView()
 	case saveView:
 		return m.viewSaveView()
+	case explorerView:
+		return m.viewExplorerView()
 	default:
 		panic("Something went horribly wrong.")
 	}
