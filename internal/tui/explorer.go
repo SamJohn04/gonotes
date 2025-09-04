@@ -29,9 +29,9 @@ func (m model) updateExplorerView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		if !ok {
 			return m, nil
 		} else if i.IsDir {
-			newPath := filepath.Join(m.currentDirectory, i.Name)
+			newPath, _ := filepath.Abs(filepath.Join(m.currentDirectory, i.Name))
 			m.currentDirectory = newPath
-			m.dirList.SetItems(explorer.ReadDir(m.currentDirectory))
+			m.dirList.SetItems(explorer.ReadDir(newPath))
 			return m, nil
 		} else {
 			newPath := filepath.Join(m.currentDirectory, i.Name)

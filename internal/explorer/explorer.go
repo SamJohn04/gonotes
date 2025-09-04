@@ -12,12 +12,17 @@ type FileItem struct {
 }
 
 func ReadDir(path string) []list.Item {
+	var items []list.Item
+
 	entries, err := os.ReadDir(path)
 	if err != nil {
 		return []list.Item{}
 	}
 
-	var items []list.Item
+	items = append(items, FileItem{
+		Name: "..",
+		IsDir: true,
+	})
 	for _, e := range entries {
 		items = append(items, FileItem{
 			Name: e.Name(),
