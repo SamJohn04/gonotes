@@ -12,7 +12,10 @@ import (
 func (m model) viewExplorerView() string {
 	helperText := "Browsing: " + m.currentDirectory
 	seenDirList := m.dirList.View()
-	return baseStyle.Render(lipgloss.JoinVertical(
+	return baseStyle.
+		Width(m.width).
+		Height(m.height).
+		Render(lipgloss.JoinVertical(
 		lipgloss.Left,
 		helperText,
 		seenDirList,

@@ -64,7 +64,11 @@ func InitialModel(filename string, styleCfg config.StyleConfig) model {
 	saveTi.TextStyle = baseStyle
 
 	currentDirectory, _ := filepath.Abs(filepath.Dir(filename))
-	dirList := list.New(explorer.ReadDir(currentDirectory), list.NewDefaultDelegate(), 0, 0)
+	dirList := list.New(explorer.ReadDir(currentDirectory), explorerDelegate{}, 0, 0)
+	dirList.SetShowHelp(false)
+	dirList.SetShowTitle(false)
+	dirList.SetShowPagination(false)
+	dirList.SetShowStatusBar(false)
 
 	return model{
 		state: initialState,
@@ -94,7 +98,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.height = msg.Height
 
 		m.textarea.SetWidth(m.width)
-		m.textarea.SetHeight(m.height-1)
+		m.textarea.SetHeight(m.height-2)
 
 		m.dirList.SetSize(m.width, m.height-1)
 	
