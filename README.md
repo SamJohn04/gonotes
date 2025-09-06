@@ -30,5 +30,5 @@ You must have [Golang](https://go.dev) installed.
 
 ## Contributing
 
-We are absolutely thankful for your wish to contribute to nate.
+Any and all contributions are absolutely welcome!
 
