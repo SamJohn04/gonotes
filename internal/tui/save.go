@@ -42,6 +42,8 @@ func (m model) updateSaveView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		err := files.WriteNewFile(m.filename, m.textarea.Value())
 
 		if err == nil {
+			m.editorMessage = m.filename + " saved"
+			m.removeModified()
 			m.switchToEditorView()
 		}
 

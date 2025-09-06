@@ -30,7 +30,8 @@ type model struct {
 	// Editor state
 	textarea textarea.Model
 	filename string
-	modified bool
+	modified map[string]bool
+	editorMessage string
 
 	// Save state
 	save textinput.Model
@@ -78,7 +79,8 @@ func InitialModel(filename string, styleCfg config.StyleConfig) model {
 
 		textarea: ti,
 		filename: filename,
-		modified: false,
+		modified: map[string]bool{},
+		editorMessage: "",
 
 		save: saveTi,
 

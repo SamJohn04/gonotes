@@ -16,10 +16,16 @@ func (m model) viewEditorView() string {
 		Height(1).
 		Render("(ctrl+z to quit; ctrl+s to save; ctrl+w to save as; ctrl+e for explorer)")
 
+	baseMessage := baseStyle.
+		Width(m.width).
+		Height(1).
+		Render(m.editorMessage)
+
 	return lipgloss.JoinVertical(
 		lipgloss.Left,
 		base,
 		quitMessage,
+		baseMessage,
 		)
 }
 
@@ -29,6 +35,13 @@ func (m model) updateEditorView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 	switch msg.String() {
 	// exit the program
 	case "ctrl+z":
+		if (len(m.modified) == 0) {
+			return m, tea.Quit
+		}
+		m.editorMessage = "Some files have not been saved. Use ctrl+q to Quit Anyway"
+		return m, nil
+	
+	case "ctrl+q":
 		return m, tea.Quit
 
 	// save
@@ -37,6 +50,8 @@ func (m model) updateEditorView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 			m.switchToSaveView()
 		} else {
 			files.WriteFile(m.filename, m.textarea.Value())
+			m.removeModified()
+			m.editorMessage = m.filename + " saved"
 		}
 		return m, nil
 	
@@ -51,16 +66,19 @@ func (m model) updateEditorView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		return m, nil
 	
 	case "tab":
+		m.markAsModified()
 		m.textarea.InsertString("\t")
 		return m, nil
 	
 	case "enter":
+		m.markAsModified()
 		leading := m.findLeadingWhitespace(m.textarea.Line())
 		m.textarea, cmd = m.textarea.Update(msg)
 		m.textarea.InsertString(leading)
 		return m, cmd
 	}
 
+	m.markAsModified()
 	m.textarea, cmd = m.textarea.Update(msg)
 	return m, cmd
 }
