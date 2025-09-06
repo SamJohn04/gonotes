@@ -45,3 +45,35 @@ func TestReadFile(t *testing.T) {
 	}
 }
 
+func TestWriteFile(t *testing.T) {
+	var writeResult error
+
+	dir := t.TempDir()
+	filename := filepath.Join(dir, "test.txt")
+
+	writeResult = WriteFile(filename, "Hello, World!")
+	if writeResult != nil {
+		t.Errorf("Case 1: Something went wrong: %v", writeResult)
+	} else {
+		output, _ := os.ReadFile(filename)
+		if string(output) != "Hello, World!" {
+			t.Errorf("Case 1: Expected \"Hello, World!\", got %s", string(output))
+		}
+	}
+
+	writeResult = WriteFile(filename, "Hello")
+	if writeResult != nil {
+		t.Errorf("Case 2: Something went wrong: %v", writeResult)
+	} else {
+		output, _ := os.ReadFile(filename)
+		if string(output) != "Hello" {
+			t.Errorf("Case 2: Expected \"Hello\", got %s", string(output))
+		}
+	}
+
+	writeResult = WriteFile(dir, "abc")
+	if writeResult == nil {
+		t.Errorf("Case 3: Something should have gone wrong, but nothing happened.")
+	}
+}
+
