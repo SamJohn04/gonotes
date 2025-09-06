@@ -28,6 +28,10 @@ You must have [Golang](https://go.dev) installed.
 4. Explorer Screen
     - The directory explorer of the application.
 
+## Customization
+
+Users are free to customize the background, foreground, and heading colors appropriately!
+
 ## Contributing
 
 Any and all contributions are absolutely welcome!
