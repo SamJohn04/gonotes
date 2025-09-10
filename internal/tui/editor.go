@@ -66,11 +66,13 @@ func (m model) updateEditorView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		return m, nil
 	
 	case "tab":
+		m.editorMessage = ""
 		m.markAsModified()
 		m.textarea.InsertString("\t")
 		return m, nil
 	
 	case "enter":
+		m.editorMessage = ""
 		m.markAsModified()
 		leading := m.findLeadingWhitespace(m.textarea.Line())
 		m.textarea, cmd = m.textarea.Update(msg)
@@ -78,6 +80,7 @@ func (m model) updateEditorView(msg tea.KeyMsg) (tea.Model, tea.Cmd) {
 		return m, cmd
 	}
 
+	m.editorMessage = ""
 	m.markAsModified()
 	m.textarea, cmd = m.textarea.Update(msg)
 	return m, cmd
